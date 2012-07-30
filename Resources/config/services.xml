@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="lidaa_trans.config_builder.class">Lidaa\TransBundle\Config\ConfigBuilder</parameter>
+        <parameter key="lidaa_trans.translation.class">Lidaa\TransBundle\Translation\Translation</parameter>
+    </parameters>
+
+    <services>
+        <service id="lidaa_trans.config_builder" class="%lidaa_trans.config_builder.class%">
+            <call method="buildConfig"> 
+                <argument>%lidaa_trans.bundles%</argument> 
+                <argument>%lidaa_trans.domains%</argument>
+				<argument>%lidaa_trans.locales%</argument>
+				<argument>%lidaa_trans.formats%</argument>
+            </call>
+        </service>
+
+        <service id="lidaa_trans.translation" class="%lidaa_trans.translation.class%">
+            <argument type="service" id="lidaa_trans.config_builder" /> 
+        </service>
+    </services>
+
+</container>
