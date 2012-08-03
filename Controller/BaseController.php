@@ -22,13 +22,14 @@ class BaseController extends Controller
     {
 		$config = $this->getConfig();
 		
+		$catalogues = array();
 		foreach($config->getLocales() as $locale)
 		{
 			$locale = strtolower($locale);
 			$catalogues[$locale] = $this->getCatalogue($bundle, $domain, $format, $locale);	
 		}
 		
-        return $catalogues;
+        	return $catalogues;
     }
     
     
@@ -37,10 +38,10 @@ class BaseController extends Controller
         $config = $this->getConfig();
         
         $form = $this->createFormBuilder()
-					->add('bundles', 'choice', array('choices' => $config->getBundles()))
-					->add('domains', 'choice', array('choices' => $config->getDomains()))
-					->add('formats', 'choice', array('choices' => $config->getFormats()))
-					->getForm();
+			->add('bundles', 'choice', array('choices' => $config->getBundles()))
+			->add('domains', 'choice', array('choices' => $config->getDomains()))
+			->add('formats', 'choice', array('choices' => $config->getFormats()))
+			->getForm();
 		
         return $form;
     }
@@ -86,7 +87,7 @@ class BaseController extends Controller
 		// todo ;)
 		if($format!= 'yaml')
 		{
-			throw new Exception(" '$format' is not supported yet (try with 'yaml') !");
+			throw new \Exception(" '$format' is not yet supported (try with 'yaml')");
 		}
 		
 		$yaml_loader = new YamlLoader();

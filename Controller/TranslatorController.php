@@ -17,24 +17,37 @@ class TranslatorController extends Controller
      */
     public function indexAction()
     {
-        $form = $this->createFormFilter();
-		
-		$bundle = 'AcmeDemoBundle';
-		$domain = 'messages';
-		$format = 'yaml';
-		
-		//exit;
-        $catalogues = $this->getCatalogues($bundle, $domain, $format);
-		$locales = array_map('strtolower', $this->getConfig()->getLocales());
-		$keys = array();
-		
-		foreach($locales as $locale)
-		{
-			$catalogue = $catalogues[$locale];
-			$data = $catalogue->all();
-			$keys += array_keys($data[$domain]);
-			$values[$locale] = $data[$domain];
-		}
+        $form = $this->createFormFilter();	
+
+	$request = $this->getRequest();
+	if($request->getMethod() == "POST")
+	{
+		$form->bindRequest($request);
+		$data = $form->getData();
+
+		$bundle = $data['bundles'];
+		$domain = $data['domains'];
+		$format = $data['formats'];
+	}
+	else
+	{
+		$bundle = key($form->get('bundles')->getAttribute('choice_list')->getChoices());
+		$domain = key($form->get('domains')->getAttribute('choice_list')->getChoices());
+		$format = key($form->get('formats')->getAttribute('choice_list')->getChoices());
+	}
+
+	$catalogues = $this->getCatalogues($bundle, $domain, $format);
+	$locales = array_map('strtolower', $this->getConfig()->getLocales());
+	$keys = array();
+	$values = array();
+	
+	foreach($locales as $locale)
+	{
+		$catalogue = $catalogues[$locale];
+		$data = $catalogue->all();
+		$keys += array_keys($data[$domain]);
+		$values[$locale] = $data[$domain];
+	}
 		
         return array('form' => $form->createView(), 'locales' => $locales, 'keys' => $keys, 'values' => $values);
     }

@@ -15,11 +15,15 @@ class ConfigBuilder
     {
         $instance = new Config();
 
+	$bundles = $this->keysToValues($bundles);
+	$domains = $this->keysToValues($domains);
+	$formats = $this->keysToValues($formats);
+
         $instance->setBundles($bundles);
         $instance->setDomains($domains);
         $instance->setLocales($locales);
-		$instance->setFormats($formats);
-        
+	$instance->setFormats($formats);
+
         self::$config = $instance;
         
         return $this; // @todo !!!
@@ -30,4 +34,12 @@ class ConfigBuilder
         return self::$config;
     }
 
+    private function keysToValues($array)
+    {
+	$values = array_values($array);
+	$new_array = array_combine($values, $values);	
+
+	return $new_array;
+    } 
+	
 }

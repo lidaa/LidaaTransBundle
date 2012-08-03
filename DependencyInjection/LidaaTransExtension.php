@@ -24,24 +24,11 @@ class LidaaTransExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-        
-        
-        if (!isset($config['bundles'])) {
-        	throw new \InvalidArgumentException('The "bundles" option must be set');
-        }
-		if (!isset($config['domains'])) {
-        	throw new \InvalidArgumentException('The "domains" option must be set');
-        }
-		if (!isset($config['locales'])) {
-        	throw new \InvalidArgumentException('The "locales" option must be set');
-        }
-		if (!isset($config['formats'])) {
-        	throw new \InvalidArgumentException('The "formats" option must be set');
-        }
-		
+
         $container->setParameter('lidaa_trans.bundles', $config['bundles']);
         $container->setParameter('lidaa_trans.domains', $config['domains']);
         $container->setParameter('lidaa_trans.locales', $config['locales']);
-		$container->setParameter('lidaa_trans.formats', $config['formats']);
-	}
+	$container->setParameter('lidaa_trans.formats', $config['formats']);
+
+    }
 }
