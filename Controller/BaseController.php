@@ -7,20 +7,62 @@ use Lidaa\TransBundle\Translation\Loader\YamlLoader;
 
 class BaseController extends Controller
 {
-    
-    protected function getTranslation()
+
+    public function getTranslation()
     {        
         return $this->get('lidaa_trans.translation');
     }
 
-    protected function getKernel()
+    public function getKernel()
     {        
         return $this->get('kernel');
     }
     
-    public function getCatalogues($bundle, $domain, $format)
+	public function getData()
+	{
+		$config = $this->getConfig();
+		$catalogues = $this->getCatalogues();
+		$locales = array_keys($catalogues);
+		$keys = array();
+		$values = array();
+
+		foreach($locales as $locale)
+		{
+			$catalogue = $catalogues[$locale];
+			$data = $catalogue->all();
+			$domain = key($data);
+			$keys += array_keys($data[$domain]);
+			$values[$locale] = $data[$domain];
+		}
+		
+		$dataTrans = new \stdClass();
+		$dataTrans->locales = $locales;
+		$dataTrans->keys = $keys;
+		$dataTrans->values = $values;
+		
+		return $dataTrans;
+	}
+    
+	public function getConfig()
+    {
+        $lidaa_translator = $this->getTranslation();
+        $config = $lidaa_translator->initConfig();
+        
+        return $config;
+    }
+	
+	protected function saveKey($key)
+	{
+		$lidaa_translator = $this->getTranslation();
+		$lidaa_translator->save($key, '-');
+	}
+	
+    protected function getCatalogues()
     {
 		$config = $this->getConfig();
+		$bundle = $this->getTranslation()->getSelectedBundle();
+		$domain = $this->getTranslation()->getSelectedDomain();
+		$format = $this->getTranslation()->getSelectedFormat();
 		
 		$catalogues = array();
 		foreach($config->getLocales() as $locale)
@@ -29,7 +71,7 @@ class BaseController extends Controller
 			$catalogues[$locale] = $this->getCatalogue($bundle, $domain, $format, $locale);	
 		}
 		
-        	return $catalogues;
+		return $catalogues;
     }
     
     
@@ -43,6 +85,10 @@ class BaseController extends Controller
 			->add('formats', 'choice', array('choices' => $config->getFormats()))
 			->getForm();
 		
+	$form->get('bundles')->setData($this->getTranslation()->getSelectedBundle());
+	$form->get('domains')->setData($this->getTranslation()->getSelectedDomain());
+	$form->get('formats')->setData($this->getTranslation()->getSelectedFormat());
+
         return $form;
     }
 
@@ -52,27 +98,19 @@ class BaseController extends Controller
         
         $bundles = $config->getBundles();
         
-        array_shift($bundles);
         $form = $this->createFormBuilder()
-                ->add('bundle', 'choice', array('choices' => $bundles))
-                ->add('domain', 'choice', array('choices' => $bundles))
-                ->add('locale', 'choice', array('choices' => $bundles))
                 ->add('key', 'text', array())
-                ->add('value', 'textarea', array())
-                
                 ->getForm();
         
         return $form;
     }
     
-    protected function getConfig()
-    {
-        $lidaa_translator = $this->getTranslation();    
-        $config = $lidaa_translator->initConfig();
-        
-        return $config;
-    }
-    
+	protected function 	setInSession($key, $value)
+	{
+		$session = $this->get('session');
+		$session->set($key, $value);
+	}
+	
     private function getResource($bundle, $domain, $locale)
     {
         $kernel = $this->getKernel();

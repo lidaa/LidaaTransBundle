@@ -19,8 +19,10 @@
             </call>
         </service>
 
-        <service id="lidaa_trans.translation" class="%lidaa_trans.translation.class%">
+        <service id="lidaa_trans.translation" class="%lidaa_trans.translation.class%" >
             <argument type="service" id="lidaa_trans.config_builder" /> 
+			<argument type="service" id="session" /> 
+			<argument type="service" id="kernel" /> 
         </service>
     </services>
 

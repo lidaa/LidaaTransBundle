@@ -19,39 +19,19 @@
 <body>
 <div id="main">
 	<div id="content">
-
+	Ajouter une nouvelle clé :<br />
+	{% render 'LidaaTransBundle:Translator:transInfos' %}
         <p>
-			<form action="" method="POST">
-				{{ form_widget(form.bundles) }}
-				{{ form_widget(form.domains) }}
-				{{ form_widget(form.formats) }}
-				<input type="submit" value="GO" name="go" />
-			</form>
-
-            <span class="right"><a href="{{ path('lidaa_trans_newkey') }}">New key</a></span>
+        <form action="" method="POST">
+	<table>
+		<tr>
+			<td>{{ form_widget(form) }}</td>
+			<td><input type="submit" value="Enregistrer" /></td>
+		</tr>
+	</table>
+        </form>
+            <span class="right"><a href="{{ path('lidaa_trans_index') }}">Index</a></span>
         </p>
-
-		<table class="list">
-			<thead>
-				<tr>
-					<th>Key</th>
-					{% for local in data.locales %}
-					<th>{{ local|upper }}</th>
-					{% endfor %}
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for key in data.keys %}
-					<tr>
-						<td>{{ key }}</td>
-						{% for local in data.locales %}
-							<td>{{ data.values[local][key]|default('-') }}</td>
-						{% endfor %}
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
 
 	</div>
 </div>

@@ -18,48 +18,48 @@ class TranslatorController extends Controller
     public function indexAction()
     {
         $form = $this->createFormFilter();	
-
-	$request = $this->getRequest();
-	if($request->getMethod() == "POST")
-	{
-		$form->bindRequest($request);
-		$data = $form->getData();
-
-		$bundle = $data['bundles'];
-		$domain = $data['domains'];
-		$format = $data['formats'];
-	}
-	else
-	{
-		$bundle = key($form->get('bundles')->getAttribute('choice_list')->getChoices());
-		$domain = key($form->get('domains')->getAttribute('choice_list')->getChoices());
-		$format = key($form->get('formats')->getAttribute('choice_list')->getChoices());
-	}
-
-	$catalogues = $this->getCatalogues($bundle, $domain, $format);
-	$locales = array_map('strtolower', $this->getConfig()->getLocales());
-	$keys = array();
-	$values = array();
-	
-	foreach($locales as $locale)
-	{
-		$catalogue = $catalogues[$locale];
-		$data = $catalogue->all();
-		$keys += array_keys($data[$domain]);
-		$values[$locale] = $data[$domain];
-	}
 		
-        return array('form' => $form->createView(), 'locales' => $locales, 'keys' => $keys, 'values' => $values);
+		$request = $this->getRequest();
+		if($request->getMethod() == "POST")
+		{
+			$form->bindRequest($request);
+			$data_form = $form->getData();
+
+			$bundle = $data_form['bundles'];
+			$domain = $data_form['domains'];
+			$format = $data_form['formats'];
+			
+			$lidaa_trans_infos['bundle'] = $data_form['bundles'];
+			$lidaa_trans_infos['domain'] = $data_form['domains'];
+			$lidaa_trans_infos['format'] = $data_form['formats'];
+			
+			$this->setInSession('lidaa_trans_infos', $lidaa_trans_infos);
+		}
+		
+        return array('form' => $form->createView(), 'data' => $this->getData());
     }
 
     /**
-     * @Route("/new", name="lidaa_trans_new")
+     * @Route("/new", name="lidaa_trans_newkey")
      * @Template()
      */
-    public function newAction()
+    public function newKeyAction()
     {
         $form = $this->createTransForm();
-                
+		
+		$request = $this->getRequest();
+		if($request->getMethod() == "POST")
+		{
+			$form->bindRequest($request);
+			$data_form = $form->getData();
+			if(!empty($data_form['key']))
+			{
+				$this->saveKey($data_form['key']);
+				
+				return $this->redirect($this->generateUrl('lidaa_trans_index'));
+			}
+		}
+
         return array('form' => $form->createView());
     }
     
@@ -80,4 +80,19 @@ class TranslatorController extends Controller
     {
         return array();
     }
+
+    /**
+     * @Route("/trans-infos", name="lidaa_trans_infos")
+     * @Template()
+     */
+     public function transInfosAction()
+     {
+	return array(
+		'bundle' => $this->getTranslation()->getSelectedBundle(), 
+		'domain' => $this->getTranslation()->getSelectedDomain(), 
+		'format' => $this->getTranslation()->getSelectedFormat(),
+		'locales' => $this->getConfig()->getLocales(),		
+		);
+     }
+
 }
