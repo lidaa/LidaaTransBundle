@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Lidaa\TransBundle\Translation\Loader;
 
 use Symfony\Component\Translation\Loader\YamlFileLoader as BaseYamlLoader;

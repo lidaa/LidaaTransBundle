@@ -22,13 +22,13 @@ class LidaaTransExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $container->setParameter('lidaa_trans.bundles', $config['bundles']);
         $container->setParameter('lidaa_trans.domains', $config['domains']);
         $container->setParameter('lidaa_trans.locales', $config['locales']);
-	$container->setParameter('lidaa_trans.formats', $config['formats']);
-
+        $container->setParameter('lidaa_trans.formats', $config['formats']);
     }
+
 }

@@ -25,49 +25,66 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
 
         $rootNode
-	        ->children()
-        		->arrayNode('bundles')->isRequired()
-        			->beforeNormalization()
-	        			->ifTrue(function($v){ return !is_array($v); })
-				        ->then(function($v){ return gettype($v); })
-                    ->end()
-        			->prototype('scalar')->end()
-        		->end()
-	        ->end();
+                ->children()
+                ->arrayNode('bundles')->isRequired()
+                ->beforeNormalization()
+                ->ifTrue(function($v) {
+                            return!is_array($v);
+                        })
+                ->then(function($v) {
+                            return gettype($v);
+                        })
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->end();
 
         $rootNode
-	        ->children()
-        		->arrayNode('domains')->isRequired()
-        			->beforeNormalization()
-	        			->ifTrue(function($v){ return !is_array($v); })
-				        ->then(function($v){ return gettype($v); })
-                    ->end()
-        			->prototype('scalar')->end()
-        		->end()
-	        ->end();
-        
+                ->children()
+                ->arrayNode('domains')->isRequired()
+                ->beforeNormalization()
+                ->ifTrue(function($v) {
+                            return!is_array($v);
+                        })
+                ->then(function($v) {
+                            return gettype($v);
+                        })
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->end();
+
         $rootNode
-	        ->children()
-        		->arrayNode('locales')->isRequired()
-        			->beforeNormalization()
-	        			->ifTrue(function($v){ return !is_array($v); })
-				        ->then(function($v){ return gettype($v); })
-                    ->end()
-        			->prototype('scalar')->end()
-        		->end()
-	        ->end();
-        
-	$rootNode
-	        ->children()
-        		->arrayNode('formats')->isRequired()
-        			->beforeNormalization()
-	        			->ifTrue(function($v){ return !is_array($v); })
-				        ->then(function($v){ return gettype($v); })
-                    ->end()
-        			->prototype('scalar')->end()
-        		->end()
-	        ->end();
+                ->children()
+                ->arrayNode('locales')->isRequired()
+                ->beforeNormalization()
+                ->ifTrue(function($v) {
+                            return!is_array($v);
+                        })
+                ->then(function($v) {
+                            return gettype($v);
+                        })
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->end();
+
+        $rootNode
+                ->children()
+                ->arrayNode('formats')->isRequired()
+                ->beforeNormalization()
+                ->ifTrue(function($v) {
+                            return!is_array($v);
+                        })
+                ->then(function($v) {
+                            return gettype($v);
+                        })
+                ->end()
+                ->prototype('scalar')->end()
+                ->end()
+                ->end();
 
         return $treeBuilder;
     }
+
 }
