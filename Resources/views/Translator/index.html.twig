@@ -37,7 +37,7 @@
                 <td>
                     {% if data.values[local][key] is defined %}
                         {{ data.values[local][key] }}
-                        <a href="#"><img src="{{ asset('bundles/lidaatrans/img/value_delete.png') }}" /></a>
+                        <a href="{{ path('lidaa_trans_deletevalue', {'value': key~'-'~local}) }}"><img src="{{ asset('bundles/lidaatrans/img/value_delete.png') }}" /></a>
                         <a href="#"><img src="{{ asset('bundles/lidaatrans/img/value_edit.png') }}" /></a>
                     {% else %}
                         <a href="#"><img src="{{ asset('bundles/lidaatrans/img/value_add.png') }}" /></a>                        

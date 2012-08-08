@@ -36,19 +36,36 @@ class Translation
             file_put_contents($resource, $yaml_string, FILE_APPEND);
         }
     }
-    
-    public function delete($key)
+
+    public function delete($key, $type)
     {
-        $config = $this->initConfig();
-        foreach ($config->getLocales() as $locale) {
+        if ($type == 'key') {
+            $config = $this->initConfig();
+            foreach ($config->getLocales() as $locale) {
+                $resource = $this->getResource($locale);
+                $array_file = Yaml::parse($resource);
+
+                // @todo: if the key is duplicated !!
+                unset($array_file[$key]);
+
+                $yaml_file = Yaml::dump($array_file);
+
+                file_put_contents($resource, $yaml_file);
+            }
+        } elseif ($type == 'value') {
+
+            $array_key = explode('-', $key);
+            $locale = array_pop($array_key);
+            $key = implode('-', $array_key);
+            
             $resource = $this->getResource($locale);
             $array_file = Yaml::parse($resource);
-            
+
             // @todo: if the key is duplicated !!
             unset($array_file[$key]);
-            
+
             $yaml_file = Yaml::dump($array_file);
-            
+
             file_put_contents($resource, $yaml_file);
         }
     }

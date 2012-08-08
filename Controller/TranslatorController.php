@@ -82,12 +82,14 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="lidaa_trans_delete")
+     * @Route("/{value}/delete", name="lidaa_trans_deletevalue")
      * @Template()
      */
-    public function deleteAction()
-    {
-        return array();
+    public function deleteValueAction($value)
+    {   
+        $this->deleteValue($value);
+
+        return $this->redirect($this->generateUrl('lidaa_trans_index'));
     }
 
     /**

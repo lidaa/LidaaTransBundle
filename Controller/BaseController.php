@@ -59,9 +59,15 @@ class BaseController extends Controller
     protected function deleteKey($key)
     {
         $lidaa_translator = $this->getTranslation();
-        $lidaa_translator->delete($key);
+        $lidaa_translator->delete($key, 'key');
     }
     
+    protected function deleteValue($value)
+    {
+        $lidaa_translator = $this->getTranslation();
+        $lidaa_translator->delete($value, 'value');
+    }
+
     protected function getCatalogues()
     {
         $config = $this->getConfig();
