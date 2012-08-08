@@ -40,7 +40,7 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/new", name="lidaa_trans_newkey")
+     * @Route("/new-key", name="lidaa_trans_newkey")
      * @Template()
      */
     public function newKeyAction()
@@ -59,6 +59,17 @@ class TranslatorController extends Controller
         }
 
         return array('form' => $form->createView());
+    }
+
+    /**
+     * @Route("/key/{key}/delete", name="lidaa_trans_deletekey")
+     * @Template()
+     */
+    public function deleteKeyAction($key)
+    {
+        $this->deleteKey($key);
+
+        return $this->redirect($this->generateUrl('lidaa_trans_index'));
     }
 
     /**

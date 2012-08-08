@@ -36,6 +36,22 @@ class Translation
             file_put_contents($resource, $yaml_string, FILE_APPEND);
         }
     }
+    
+    public function delete($key)
+    {
+        $config = $this->initConfig();
+        foreach ($config->getLocales() as $locale) {
+            $resource = $this->getResource($locale);
+            $array_file = Yaml::parse($resource);
+            
+            // @todo: if the key is duplicated !!
+            unset($array_file[$key]);
+            
+            $yaml_file = Yaml::dump($array_file);
+            
+            file_put_contents($resource, $yaml_file);
+        }
+    }
 
     public function getResource($locale)
     {

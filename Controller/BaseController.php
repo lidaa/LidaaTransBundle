@@ -56,6 +56,12 @@ class BaseController extends Controller
         $lidaa_translator->save($key, '-');
     }
 
+    protected function deleteKey($key)
+    {
+        $lidaa_translator = $this->getTranslation();
+        $lidaa_translator->delete($key);
+    }
+    
     protected function getCatalogues()
     {
         $config = $this->getConfig();
