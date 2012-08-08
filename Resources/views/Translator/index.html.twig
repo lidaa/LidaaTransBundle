@@ -8,7 +8,12 @@
         {{ form_widget(form.formats) }}
         <input type="submit" value="GO" name="go" />
     </form>
-    <span class="right"><a href="{{ path('lidaa_trans_newkey') }}">New key</a></span>
+    <span class="right">
+        <a href="{{ path('lidaa_trans_newkey') }}">
+            <img src="{{ asset('bundles/lidaatrans/img/key_add.png') }}" />
+            New key
+        </a>
+    </span>
 </p>
 
 <table class="list">
@@ -24,9 +29,12 @@
     <tbody>
         {% for key in data.keys %}
             <tr>
-                <td>{{ key }}</td>
+                <td>
+                    {{ key }}
+                    <a><img src="{{ asset('bundles/lidaatrans/img/key_delete.png') }}" /></a>    
+                </td>
                 {% for local in data.locales %}
-                <td>{{ data.values[local][key]|default('-') }}</td>
+                <td>{{ data.values[local][key]|default('') }}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
