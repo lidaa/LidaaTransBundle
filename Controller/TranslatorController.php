@@ -5,6 +5,7 @@ namespace Lidaa\TransBundle\Controller;
 use Lidaa\TransBundle\Controller\BaseController as Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\FormError;
 
 /**
  * @Route("/_translator")
@@ -17,7 +18,7 @@ class TranslatorController extends Controller
      * @Template()
      */
     public function indexAction()
-    {
+    {       
         $form = $this->createFormFilter();
 
         $request = $this->getRequest();
@@ -45,7 +46,7 @@ class TranslatorController extends Controller
      */
     public function newKeyAction()
     {
-        $form = $this->createTransForm();
+        $form = $this->createKeyTransForm();
 
         $request = $this->getRequest();
         if ($request->getMethod() == "POST") {
@@ -71,6 +72,36 @@ class TranslatorController extends Controller
 
         return $this->redirect($this->generateUrl('lidaa_trans_index'));
     }
+
+    /**
+     * @Route("/lang/{locale}/key/{key}/new-value", name="lidaa_trans_newvalue")
+     * @Template()
+     */
+    public function newValueAction($locale, $key)
+    {
+        $form = $this->createValueTransForm($locale, $key);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == "POST") {
+            $form->bindRequest($request);
+            $data_form = $form->getData();
+            
+            if (empty($data_form['value'])) {
+                $form->get('value')->addError(new FormError('This value should not be blank.'));
+            } else {
+                $locale = $data_form['locale'];
+                $key = $data_form['key'];
+                $value = $data_form['value'];
+                
+                $this->saveValue($locale, $key, $value);
+                
+                return $this->redirect($this->generateUrl('lidaa_trans_index'));
+            } 
+        }
+
+        return array('form' => $form->createView());
+    }
+
 
     /**
      * @Route("/{id}/edit", name="lidaa_trans_edit")

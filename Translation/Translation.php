@@ -26,14 +26,25 @@ class Translation
         return $this->configBuilder->getConfig();
     }
 
-    public function save($key, $value)
+    public function save($key, $value, $type)
     {
-        $config = $this->initConfig();
-        foreach ($config->getLocales() as $locale) {
-            $resource = $this->getResource($locale);
-            $yaml_string = Yaml::dump(array($key => $value));
+        if($type == 'key') {
+            $config = $this->initConfig();
+            foreach ($config->getLocales() as $locale) {
+                $resource = $this->getResource($locale);
+                $yaml_string = Yaml::dump(array($key => $value));
 
-            file_put_contents($resource, $yaml_string, FILE_APPEND);
+                file_put_contents($resource, $yaml_string, FILE_APPEND);
+            }
+        } elseif ($type == 'value') {
+            $array_value = explode('-', $value);
+            $locale = array_shift($array_value);
+            $value = implode('-', $array_value);
+
+            $resource = $this->getResource($locale);
+            $yaml_file = Yaml::dump(array($key => $value));
+
+            file_put_contents($resource, $yaml_file, FILE_APPEND);
         }
     }
 

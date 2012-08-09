@@ -1,0 +1,23 @@
+{% extends 'LidaaTransBundle::base.html.twig' %}
+
+{% block content %}
+    Ajouter une nouvelle valeur :<br />
+    <p>
+    <form action="" method="post" novalidate="novalidate">
+        <table>
+            {% for key, child in form if key != '_token' %}
+                <tr>
+                    <td>{{ form_label(child) }}</td>
+                    <td> : </td>
+                    <td>{{ form_widget(child) }}</td>
+                    <td class="error_form">{{ form_errors(child) }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>{{ form_rest(form) }}</td><td></td><td><input type="submit" value="Enregistrer" /></td>
+            </tr>
+        </table>
+        </form>
+        <span class="right"><a href="{{ path('lidaa_trans_index') }}">Index</a></span>
+    </p>
+{% endblock %}

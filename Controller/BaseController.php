@@ -57,13 +57,19 @@ class BaseController extends Controller
     protected function saveKey($key)
     {
         $lidaa_translator = $this->getTranslation();
-        $lidaa_translator->save($key, '-');
+        $lidaa_translator->save($key, '-', 'key');
     }
 
     protected function deleteKey($key)
     {
         $lidaa_translator = $this->getTranslation();
         $lidaa_translator->delete($key, 'key');
+    }
+    
+    protected function saveValue($locale, $key, $value)
+    {
+        $lidaa_translator = $this->getTranslation();
+        $lidaa_translator->save($key, $locale.'-'.$value, 'value');
     }
     
     protected function deleteValue($value)
@@ -105,14 +111,24 @@ class BaseController extends Controller
         return $form;
     }
 
-    protected function createTransForm()
+    protected function createKeyTransForm()
     {
-        $config = $this->getConfig();
-
-        $bundles = $config->getBundles();
-
         $form = $this->createFormBuilder()
                 ->add('key', 'text', array())
+                ->getForm();
+
+        return $form;
+    }
+
+    protected function createValueTransForm($locale, $key)
+    {   
+        $form = $this->createFormBuilder()
+                ->add('bundle', 'text', array('data' => $this->getTranslation()->getSelectedBundle(), 'attr' => array('readOnly' => true)))
+                ->add('domain', 'text', array('data' => $this->getTranslation()->getSelectedDomain(), 'attr' => array('readOnly' => true)))
+                ->add('format', 'text', array('data' => $this->getTranslation()->getSelectedFormat(), 'attr' => array('readOnly' => true)))
+                ->add('locale', 'text', array('data' => $locale, 'attr' => array('readOnly' => true)))
+                ->add('key', 'text', array('data' => $key, 'attr' => array('readOnly' => true)))
+                ->add('value', 'textarea', array())
                 ->getForm();
 
         return $form;
