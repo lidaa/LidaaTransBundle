@@ -7,13 +7,13 @@
         {{ form_widget(form.domains) }}
         {{ form_widget(form.formats) }}
         <input type="submit" value="GO" name="go" />
+        <span class="right">
+            <a href="{{ path('lidaa_trans_newkey') }}">
+                <img src="{{ asset('bundles/lidaatrans/img/key_add.png') }}" />
+                New key
+            </a>
+        </span>
     </form>
-    <span class="right">
-        <a href="{{ path('lidaa_trans_newkey') }}">
-            <img src="{{ asset('bundles/lidaatrans/img/key_add.png') }}" />
-            New key
-        </a>
-    </span>
 </p>
 
 <table class="list">

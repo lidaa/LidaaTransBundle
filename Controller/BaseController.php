@@ -30,7 +30,11 @@ class BaseController extends Controller
             $catalogue = $catalogues[$locale];
             $data = $catalogue->all();
             $domain = key($data);
-            $keys += array_keys($data[$domain]);
+            
+            $old_array = array_keys($data[$domain]);
+            $new_array = array_combine($old_array, $old_array);
+            
+            $keys += $new_array;
             $values[$locale] = $data[$domain];
         }
 
