@@ -63,7 +63,7 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/key/{key}/delete", name="lidaa_trans_deletekey")
+     * @Route("/key/{key}/delete", name="lidaa_trans_deletekey", requirements={"key" = ".+"})
      * @Template()
      */
     public function deleteKeyAction($key)
@@ -74,7 +74,7 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/lang/{locale}/key/{key}/new-value", name="lidaa_trans_newvalue")
+     * @Route("/lang/{locale}/key/{key}/new-value", name="lidaa_trans_newvalue", requirements={"key" = ".+"})
      * @Template()
      */
     public function newValueAction($locale, $key)
@@ -113,7 +113,7 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/{value}/delete", name="lidaa_trans_deletevalue")
+     * @Route("/{value}/delete", name="lidaa_trans_deletevalue", requirements={"value" = ".+"})
      * @Template()
      */
     public function deleteValueAction($value)
