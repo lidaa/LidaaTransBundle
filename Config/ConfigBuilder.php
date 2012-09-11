@@ -9,7 +9,6 @@ namespace Lidaa\TransBundle\Config;
  */
 class ConfigBuilder
 {
-
     private static $config;
 
     public function buildConfig($bundles, $domains, $locales, $formats)

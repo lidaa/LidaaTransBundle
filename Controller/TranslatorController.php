@@ -102,14 +102,33 @@ class TranslatorController extends Controller
         return array('form' => $form->createView());
     }
 
-
     /**
-     * @Route("/{id}/edit", name="lidaa_trans_edit")
+     * @Route("/lang/{locale}/key/{key}/edit-value", name="lidaa_trans_editvalue", requirements={"key" = ".+"})
      * @Template()
      */
-    public function editAction()
+    public function editValueAction($locale, $key)
     {
-        return array();
+        $form = $this->createValueTransForm($locale, $key);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == "POST") {
+            $form->bindRequest($request);
+            $data_form = $form->getData();
+            
+            if (empty($data_form['value'])) {
+                $form->get('value')->addError(new FormError('This value should not be blank.'));
+            } else {
+                $locale = $data_form['locale'];
+                $key = $data_form['key'];
+                $value = $data_form['value'];
+                
+                $this->saveValue($locale, $key, $value);
+                
+                return $this->redirect($this->generateUrl('lidaa_trans_index'));
+            }
+        }
+
+        return array('form' => $form->createView());
     }
 
     /**

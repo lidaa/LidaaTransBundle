@@ -9,7 +9,6 @@ namespace Lidaa\TransBundle\Config;
  */
 class Config
 {
-
     private $bundles;
     private $domains;
     private $locales;
