@@ -1,0 +1,22 @@
+{
+  "name": "lidaa/trans-bundle",
+  "description": "LidaaTransBundle",
+  "keywords": ["symfony2", "trans"],
+  "homepage": "https://github.com/lidaa/LidaaTransBundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lidaa",
+      "email": "aa_dil@hotmail.fr"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "symfony/symfony": ">=2.0.9,<2.0.15",
+  },
+  "autoload": {
+      "psr-0": { "Lidaa\\TransBundle": "" }
+  },
+  "target-dir": "Lidaa/TransBundle"
+}
