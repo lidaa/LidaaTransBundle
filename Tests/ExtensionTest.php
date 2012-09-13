@@ -22,7 +22,12 @@ class ExtensionTest extends WebTestCase
     {
     	$container = $this->createContainer();
     	$container->registerExtension(new TransExtension());
-    	$container->loadFromExtension('lidaa_trans', array());
+    	$container->loadFromExtension('lidaa_trans', array(
+            'bundles' => array('AcmeDemoBundle'),
+            'domains' => array('messages'),
+            'locales' => array('fr'),
+            'formats' => array('yaml')
+        ));
     	$this->compileContainer($container);
 
     	$this->assertEquals('Lidaa\TransBundle\Config\ConfigBuilder', $container->getParameter('lidaa_trans.config_builder.class'));
