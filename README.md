@@ -1,5 +1,6 @@
 LidaaTransBundle
 ================
+[![Build Status](https://secure.travis-ci.org/lidaa/LidaaTransBundle.png)](http://travis-ci.org/lidaa/LidaaTransBundle)
 
 Provides a web interface to manage translations of different project bundles
 
