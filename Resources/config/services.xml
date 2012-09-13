@@ -14,8 +14,8 @@
             <call method="buildConfig"> 
                 <argument>%lidaa_trans.bundles%</argument> 
                 <argument>%lidaa_trans.domains%</argument>
-		<argument>%lidaa_trans.locales%</argument>
-		<argument>%lidaa_trans.formats%</argument>
+				<argument>%lidaa_trans.locales%</argument>
+				<argument>%lidaa_trans.formats%</argument>
             </call>
         </service>
 
