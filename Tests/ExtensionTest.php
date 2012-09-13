@@ -21,7 +21,7 @@ class ExtensionTest extends WebTestCase
     public function testLoadEmptyConfiguration()
     {
     	$container = $this->createContainer();
-    	$container->registerExtension(new TwigExtension());
+    	$container->registerExtension(new TransExtension());
     	$container->loadFromExtension('lidaa_trans', array());
     	$this->compileContainer($container);
 
