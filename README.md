@@ -15,7 +15,7 @@ Installation
 
 **1- Add the following lines in your deps file:**
 
-  [LidaaTransBundle]
+	[LidaaTransBundle]
 		 git=git://github.com/lidaa/LidaaTransBundle.git
 		 target=/bundles/Lidaa/TransBundle
 
@@ -24,7 +24,7 @@ Installation
 
 	$ php bin/vendors install
 
-**3- Add LidaaTwigBundle to your application kernel:**
+**3- Add LidaaTransBundle to your application kernel:**
 
 	// app/AppKernel.php
 	public function registerBundles()
