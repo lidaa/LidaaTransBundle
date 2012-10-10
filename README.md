@@ -45,6 +45,12 @@ Installation
 		 //...
 	));
 
+Usage
+======
+Load editor in browser
+
+	app_dev.php/_translator/index
+
 
 TODO
 =====
